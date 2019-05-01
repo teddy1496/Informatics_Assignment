@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pallets</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <link rel="shortcut icon" href="https://s3.amazonaws.com/django-blog/ico/favicon_v2.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial;
+    padding: 10px;
+    background: #f1f1f1;
+  }
+
+  /* Header/Blog Title */
+  .header {
+    padding: 5px;
+    text-align: center;
+    background: white;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+  .leftcolumn {
+    float: left;
+    width: 75%;
+  }
+
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25%;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+  }
+
+  /* Fake image */
+  .fakeimg {
+    background-color: #aaa;
+    width: 100%;
+    padding: 20px;
+  }
+
+  /* Add a card effect for articles */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+  }
+  #circle {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-color: #f1f1f1;
+  padding-left: 6px;
+  padding-top:90px;
+  /* width and height can be anything, as long as they're equal */
+  }
+
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+        width: 100%;
+        padding: 0;
+    }
+  }
+
+  /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+  @media screen and (max-width: 400px) {
+    .topnav a {
+        float: none;
+        width: 100%;
+    }
+  }
+  #mySidenav a {
+    position: absolute;
+    left: -80px;
+    transition: 0.1s;
+    padding: 15px;
+    width: 100px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+  }
+
+  #mySidenav a:hover {
+    left: 0;
+  }
+
+  #Home {
+    top: 20px;
+    background-color: #4CAF50;
+  }
+
+  #Pallets {
+    top: 80px;
+    background-color: #2196F3;
+  }
+
+  #Events {
+    top: 140px;
+    background-color: #f44336;
+  }
+
+  #Histories {
+    top: 200px;
+    background-color: #555
+  }
+
+  #alert1 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert2 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert3 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert4 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert5 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+
+  }
+  #alert6 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert7 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+  #alert8 {
+      padding: 20px;
+      background-color: grey;
+      color: black;
+  }
+
+  .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+  }
+
+  .closebtn:hover {
+      color: black;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  </style>
+  </head>
+  <body>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="/index" id="Home">Home</a>
+    <a href="/pallets" id="Pallets">Pallets</a>
+    <a href="/events" id="Events">Events</a>
+    <a href="/my_histories" id="Histories">History</a>
+  </div>
+
+  <div class="header">
+  <h1>!!!Events!!!</h1>
+  <p>Displaying all occured events</p>
+  </div>
+  <div class="row">
+  <div class="leftcolumn">
+    <div class="card">
+      <div align="center" >
+        <div style="overflow:scroll;height:300px;width:100%;overflow:auto">
+      <div id="log" > </div>
+    </div>
+    </div>
+  </div>
+  </div>
+  <div class="rightcolumn">
+  <div class="card">
+    <div align="center" >
+    <h2>Current State</h2>
+    <div id="circle" width="300" height="300">Current State</div>
+    <p>The current state of the workstation</p>
+  </div>
+  </div>
+  <div class="card">
+    <h3>Alarms will be shown here</h3>
+    <div id="alert1">
+      <span id="my_alert1"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert2">
+      <span id="my_alert2"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert3">
+      <span id="my_alert3"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert4">
+      <span id="my_alert4"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert5">
+      <span id="my_alert5"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert6">
+      <span id="my_alert6"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert7">
+      <span id="my_alert7"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    <div id="alert8">
+      <span id="my_alert8"></span>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+  </div>
+  </div>
+  </div>
+  <div class="footer">
+  <h2>Footer</h2>
+  </div>
+
+
+  <script>
+    window.setInterval(function(){
+        getPallet()
+        getAlarm()
+    }, 1000);
+    function getAlarm(){
+          console.log("checking if error retrieving");
+
+          $.get( "/EventAlarm", function( data ) {
+              dataObject_alarm = JSON.parse(data);
+              console.log(dataObject_alarm)
+              my_alarmEvents1(dataObject_alarm)
+              my_alarmEvents2(dataObject_alarm)
+              my_alarmEvents3(dataObject_alarm)
+              my_alarmEvents4(dataObject_alarm)
+              my_alarmEvents5(dataObject_alarm)
+              my_alarmEvents6(dataObject_alarm)
+              my_alarmEvents7(dataObject_alarm)
+              my_alarmEvents8(dataObject_alarm)
+
+          });
+      }
+
+    function getPallet(){
+          console.log("get state routine...");
+
+          //Contact REST endpoint on the server
+          $.get( "/event", function( data ) {
+              dataObj = JSON.parse(data);
+              //alert( "Load was performed." );
+              htmlTable=getHtmlTable(dataObj);
+              $("#log").html(htmlTable);
+
+          });
+          $.get( "/Wstatenow", function( data ) {
+              dataObj_state = JSON.parse(data);
+              //alert( "Load was performed." );
+              htmlObj=dispState(dataObj_state);
+      });
+    }
+    function getHtmlTable(dataObj){
+          var tb="<table>\n" +
+              "  <tr>\n" +
+              "    <th>id</th>\n" +
+              "    <th>Event Description</th>\n" +
+              "    <th>Time </th>\n" +
+              "  </tr>";
+
+          for(var i in dataObj)
+          {
+              var id = dataObj[i][0];
+              var eventName = dataObj[i][1];
+              var start_time = dataObj[i][2];
+              console.log(id);
+              tb+="<tr><td>"+id+"</td><td>"+eventName+"</td><td>"+start_time+"</td></tr>";
+          }
+          tb+="</table>";
+          return tb;
+      }
+      function draw(color, my_text){
+        var circ = document.getElementById('circle');
+        circ.style.backgroundColor = color;
+        circ.innerText = my_text;
+        circ.style.color= "black"
+        }
+      function dispState(dataObj_state){
+        var now_state = dataObj_state[0];
+        if(now_state == "Working"){
+          draw('green', "WORKING")
+        }
+        if(now_state == "Error"){
+          draw('#e50606', "ERROR")
+        }
+        if(now_state == "Idle"){
+          draw('#f2ea02', "IDLE")
+        }
+    }
+    function my_alarmEvents1(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert1');
+      var colorSet = document.getElementById('alert1');
+      if(dataObject_alarm[0] == "Workstation in Error"){
+        alarmy.innerText = "error occured"
+        colorSet.style.backgroundColor = '#e50606'
+      }
+    }
+    function my_alarmEvents2(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert2');
+      var colorSet = document.getElementById('alert2');
+      if(dataObject_alarm[0] == "Workstation has been Reset"){
+        alarmy.innerText = "I've been Reset"
+        colorSet.style.backgroundColor = '#f2ea02'
+      }
+    }
+    function my_alarmEvents3(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert3');
+      var colorSet = document.getElementById('alert3');
+      if(dataObject_alarm[0] == "I'm almost full"){
+        alarmy.innerText = "I'm almost full"
+        colorSet.style.backgroundColor = '#f4b342'
+      }
+    }
+    function my_alarmEvents4(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert4');
+      var colorSet = document.getElementById('alert4');
+      if(dataObject_alarm[0] == "I'm full"){
+        alarmy.innerText = "I'm Stuffed"
+        colorSet.style.backgroundColor = '#f46e41'
+      }
+    }
+    function my_alarmEvents5(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert5');
+      var colorSet = document.getElementById('alert5');
+      if(dataObject_alarm[0] == "I'm already a pinata"){
+        alarmy.innerText = "I'm already stuffed like a pinata dude"
+        colorSet.style.backgroundColor = '#f20909'
+      }
+
+    }
+    function my_alarmEvents6(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert6');
+      var colorSet = document.getElementById('alert6');
+      if(dataObject_alarm[0] == "Workstation initiated"){
+        alarmy.innerText = "I'm Alive"
+        colorSet.style.backgroundColor = '#09f1a4'
+      }
+    }
+    function my_alarmEvents7(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert7');
+      var colorSet = document.getElementById('alert7');
+      if(dataObject_alarm[0] == "Idle Time is greater than 16"){
+        alarmy.innerText = "Something's completely wrong with me!!!"
+        colorSet.style.backgroundColor = '#09f1a4'
+      }
+    }
+    function my_alarmEvents8(dataObject_alarm){
+      var alarmy = document.getElementById('my_alert8');
+      var colorSet = document.getElementById('alert8');
+      if(dataObject_alarm[0] == "Error Time is greater than 32"){
+        alarmy.innerText = "Do you even want me to work bro???"
+        colorSet.style.backgroundColor = '#09f1a4'
+      }
+    }
+
+
+</script>
+
+</body>
+</html>
